@@ -1,5 +1,6 @@
 *.suo
 *.user
+.vs/
 bin/MuLib/
 src/MoonPdf/bin/
 src/MoonPdf/obj/
