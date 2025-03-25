@@ -439,49 +439,6 @@ namespace MoonPdfLib
 				}
 			}
 		}
-
-		/// <summary>
-		/// Will only be triggered if the AllowDrop-Property is set to true
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnDrop(DragEventArgs e)
-		{
-			base.OnDrop(e);
-
-			if (e.Data.GetDataPresent(DataFormats.FileDrop))
-			{
-				var filenames = (string[])e.Data.GetData(DataFormats.FileDrop);
-				var filename = filenames.FirstOrDefault();
-
-                if (filename != null && File.Exists(filename))
-                {
-                    string pw = null;
-
-                    if (MuPdfWrapper.NeedsPassword(new FileSource(filename)))
-                    {
-                        if (this.PasswordRequired == null)
-                            return;
-
-                        var args = new PasswordRequiredEventArgs();
-                        this.PasswordRequired(this, args);
-
-                        if (args.Cancel)
-                            return;
-
-                        pw = args.Password;
-                    }
-                    
-                    try
-                    {
-                        this.OpenFile(filename, pw);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(string.Format("An error occured: " + ex.Message));
-                    }
-                }
-			}
-		}
 	}
 
     public class PasswordRequiredEventArgs : EventArgs
